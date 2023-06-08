@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-br">
+<!--=========-->
+
+<head>
+	<!--=====Meta Configurations====-->
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+	<!--=====End Meta Configurations====-->
+
+	<!--=====Favicon====-->
+	<link rel="icon" href="Eutoemdia-iso.png">
+	<!--=====End Favicon====-->
+
+	<!--=====Title Tab====-->
+	<title>Termômetro Financeiro - Eu Tô Limpo</title>
+	<!--=====End Title Tab====-->
+
+	<!--=====CSS Style====-->
+	<style>
+		* {
+			/*font*/
+			font-family: sans-serif;
+			/*display*/
+			margin: 0;
+			padding: 0;
+		}
+
+		.chartMenu {
+			/*font*/
+			text-align: center;
+			color: rgba(255, 255, 255, 1);
+			/*display*/
+			margin: 0;
+			padding: 0;
+			width: auto;
+			height: auto;
+			background: linear-gradient(45deg, #16aae3, #f2bb24);
+		}
+
+		.chartMenu p {
+			/*font*/
+			font-size: 50px;
+			/*display*/
+			margin: 0;
+			padding: 50px;
+			width: auto;
+			height: auto
+		}
+
+		.chartCanvas {
+			/*display*/
+			display: flex;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 800px;
+			justify-content: center;
+			align-items: center;
+			vertical-align: middle;
+			background: rgba(22, 169, 227, 0.2);
+		}
+
+		.chartBox {
+			/*display*/
+			margin: 0;
+			padding: 10px;
+			width: 600px;
+			height: 600px;
+			background: white;
+			/*border*/
+			border-radius: 20px;
+			border: solid 3px rgba(242, 187, 36, 1);
+		}
+	</style>
+	<!--=====End CSS Style====-->
+</head>
+<!--=========-->
+
+<body>
+	<!--=====Title====-->
+	<div class="chartMenu">
+		<p>Termômetro Financeiro</p>
+	</div>
+	<!--=====End Title====-->
+
+	<!--=====Canvas====-->
+	<div class="chartCanvas">
+		<div class="chartBox">
+			<canvas id="myChart"></canvas>
+		</div>
+	</div>
+	<!--=====End Canvas====-->
+
+	<!--=====Script Import====-->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!--=====End Script Import====-->
+
+	<!--=====Script Graphic====-->
+	<script>
+		/*=====Graphic Var=====*/
+		let selectedDatasetIndex = undefined;
+		let selectedIndex = undefined;
+		/*=====End Graphic Var=====*/
+
+		/*=====Graphic Setup=====*/
+		const data = {
+			labels: ['Tô Péssimo', 'Tô Mal', 'Tô Sussa', 'Tô Dahora', 'Tô Voando'],
+			datasets: [{
+				label: 'Weekly Sales',
+				data: [20, 20, 20, 20, 20],
+				backgroundColor: [
+					'rgba(255, 0, 0, 0.5)',
+					'rgba(255, 127, 0, 0.5)',
+					'rgba(255, 255, 0, 0.5)',
+					'rgba(127, 255, 0, 0.5)',
+					'rgba(0, 255, 0, 0.5)',
+				],
+				borderColor: [
+					'rgba(255, 0, 0, 1)',
+					'rgba(255, 127, 0, 1)',
+					'rgba(255, 255, 0, 1)',
+					'rgba(127, 255, 0, 1)',
+					'rgba(0, 255, 0, 1)',
+				],
+				borderWidth: 1,
+				cutout: '90%'
+			}]
+		};
+		/*=====End Graphic Setup=====*/
+
+		/*=====Graphic clickLabel=====*/
+		const clickLabel = {
+			id: 'clickLabel',
+			afterDraw: (chart, args, options) => {
+				//console.log(chart)
+				//chart.chartArea.width
+				const {ctx, chartArea: {width, height, top}} = chart;
+
+				if (selectedDatasetIndex >= 0) {
+					console.log(chart._metasets[selectedDatasetIndex]._parsed[selectedIndex])
+					const sum = chart._metasets[selectedDatasetIndex].total;
+					const value = chart._metasets[selectedDatasetIndex]._parsed[selectedIndex];
+					const color = chart.data.datasets[selectedDatasetIndex].borderColor[selectedIndex];
+					const percentage = value / sum * 100;
+					console.log(percentage.toFixed(1))
+
+
+					//console.log(selectedDatasetIndex);
+					//console.log(selectedIndex);
+
+					ctx.save();
+					ctx.font = 'bolder 60px Arial';
+					ctx.fillStyle = color;
+					ctx.textAlign = 'center';
+					ctx.textBaseline = 'middle';
+					ctx.fillText(percentage.toFixed(1) + '%', width / 2, height / 2 + top);
+					ctx.restore();
+				}
+			}
+		};
+		/*=====End Graphic clickLabel=====*/
+
+		/*=====Graphic Configuration=====*/
+		const config = {
+			type: 'doughnut',
+			data,
+			options: {
+				onClick(click, element, chart) {
+					//console.log(element[0].datasetIndex)
+					if (element[0]) {
+						selectedDatasetIndex = element[0].datasetIndex;
+						selectedIndex = element[0].index;
+						chart.draw();
+					}
+				}
+			},
+			plugins: [clickLabel]
+		};
+		/*=====End Graphic Configuration=====*/
+
+		/*=====Graphic Renderização Inicial=====*/
+		const myChart = new Chart(
+			document.getElementById('myChart'),
+			config
+		);
+			/*=====End Graphic Renderização Inicial=====*/
+	</script>
+	<!--=====End Script Graphic====-->
+</body>
+<!--=========-->
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<!--==========-->
+<head>
+	<!--=====Meta Config.=====-->
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--=====End Meta Config.=====-->
+
+	<!--=====Título Aba=====-->
+	<title>Gráfico Stacked Bar</title>
+	<!--=====End Título Aba=====-->
+
+	<!--=====Gráfico Import Script=====-->
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<!--=====End Gráfico Import Script=====-->
+</head>
+<!--==========-->
+<body>
+	<!--=====Gráfico ID=====-->
+	<div id="chart"></div>
+	<!--=====End Gráfico ID=====-->
+
+	<!--=====Gráfico Script=====-->
+	<script>
+		var options = {
+          series: [{
+          name: 'Marine Sprite',
+          data: [44, 55, 41, 37, 22, 43, 21]
+        }, {
+          name: 'Striking Calf',
+          data: [53, 32, 33, 52, 13, 43, 32]
+        }, {
+          name: 'Tank Picture',
+          data: [12, 17, 11, 9, 15, 11, 20]
+        }, {
+          name: 'Bucket Slope',
+          data: [9, 7, 5, 8, 6, 9, 4]
+        }, {
+          name: 'Reborn Kid',
+          data: [25, 12, 19, 32, 25, 24, 10]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350,
+          stacked: true,
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+              total: {
+                enabled: true,
+                offsetX: 0,
+                style: {
+                  fontSize: '13px',
+                  fontWeight: 900
+                }
+              }
+            }
+          },
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        title: {
+          text: 'Fiction Books Sales'
+        },
+        xaxis: {
+          categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+          labels: {
+            formatter: function (val) {
+              return val + "K"
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: undefined
+          },
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + "K"
+            }
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'left',
+          offsetX: 40
+        }
+      };
+		/*=====Instanciar Variável=====*/
+		/*
+		let listaTabulacao = [];
+		let dtRegistro = [];
+		*/
+		/*=====End Instanciar Variável=====*/
+
+		//*=====Agrupamento de Datas Repetidas=====*/
+		/*
+		{% for resultado in resultadoTabulacaoQuantidadeData %}
+			if (listaTabulacao.includes("{{resultado[0]}}") == false){
+			listaTabulacao.push("{{resultado[0]}}");
+			};
+			if (dtRegistro.includes("{{resultado[2]}}") == false){
+			dtRegistro.push("{{resultado[2]}}");
+			};
+		{% endfor %}
+			*/
+		/*=====End Agrupamento de Datas Repetidas=====*/
+
+		/*=====Instanciar Colunas=====*/
+		/*
+		let valores = [];
+		for (tabulacao in listaTabulacao) {
+			let listaValor = [];
+
+			for (dia in dtRegistro) {
+				listaValor.push("0");
+				{% for valor in resultadoTabulacaoQuantidadeData %}
+				if (listaTabulacao[tabulacao] == "{{valor[0]}}" && dtRegistro[dia] == "{{valor[2]}}") {
+					listaValor[dia] = ("{{valor[1]}}");
+				}
+				{% endfor %}
+			};
+			valores.push(listaValor);
+		};
+
+		let listaSeries = [];
+
+		for (serie in listaTabulacao) {
+			if (!listaSeries.includes({name: listaTabulacao[serie], data: valores[serie]})) {
+				var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+				listaSeries.push({name: listaTabulacao[serie], data: valores[serie], color: "#" + randomColor})
+			}
+		}
+
+		var options = {
+			series: listaSeries,
+
+			chart: {
+				type: 'bar',
+				height: 350,
+				stacked: true,
+			},
+
+			plotOptions: {
+				bar: {
+					horizontal: true,
+					dataLabels: {
+						total: {
+							enabled: true,
+							offsetX: 0,
+							style: {
+								fontSize: '13px',
+								fontWeight: 900
+							}
+						}
+					}
+				},
+			},
+
+			stroke: {
+				width: 1,
+				colors: ['#fff']
+			},
+
+			xaxis: {
+				categories: dtRegistro,
+				labels: {
+					formatter: function (val) {
+						return val
+					}
+				}
+			},
+
+			yaxis: {
+				title: {
+					text: undefined
+				},
+			},
+
+			tooltip: {
+				y: {
+					formatter: function (val) {
+						return val
+					}
+				}
+			},
+
+			fill: {
+				opacity: 1
+			},
+
+			legend: {
+				position: 'top',
+				horizontalAlign: 'left',
+				offsetX: 40
+			}
+		};
+		*/
+		/*=====End Instanciar Colunas=====*/
+
+		/*=====Renderização=====*/
+		var chart = new ApexCharts(document.querySelector("#chart"), options);
+		chart.render();
+		/*=====End Renderização=====*/
+	</script>
+	<!--=====End Gráfico Script=====-->
+</body>
+<!--==========-->
+</html>
